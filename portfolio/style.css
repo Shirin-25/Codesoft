@@ -1,0 +1,143 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    color:#333;
+}
+
+/* Header */
+
+header{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
+    padding:80px 20px;
+}
+
+header h1{
+    font-size:3rem;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:1.2rem;
+}
+
+/* About */
+
+#about{
+    padding:60px 10%;
+}
+
+.container{
+    display:flex;
+    align-items:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+#about img{
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+#about h2{
+    margin-bottom:15px;
+}
+
+/* Skills */
+
+#skills{
+    padding:60px 10%;
+    text-align:center;
+    background:white;
+}
+
+#skills h2{
+    margin-bottom:30px;
+}
+
+.skills-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+}
+
+.skills-container span{
+    background:#667eea;
+    color:white;
+    padding:12px 20px;
+    border-radius:25px;
+}
+
+/* Projects */
+
+#projects{
+    padding:60px 10%;
+    text-align:center;
+}
+
+.project-card{
+    background:white;
+    margin:25px auto;
+    max-width:700px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.project-card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.project-card h3{
+    margin:15px 0;
+}
+
+/* Resume */
+
+#resume{
+    padding:60px;
+    text-align:center;
+    background:white;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 25px;
+    background:#667eea;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.btn:hover{
+    background:#4f63d8;
+}
+
+/* Contact */
+
+#contact{
+    padding:60px;
+    text-align:center;
+}
+
+/* Footer */
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
