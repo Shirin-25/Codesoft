@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PixelCraft — Learn HTML & CSS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:   #0D1B2A;
+      --indigo: #5B4FE9;
+      --mint:   #A8F0D4;
+      --white:  #F5F5F0;
+      --grey:   #8A9BAE;
+      --card-bg:#111E2E;
+      --radius: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(91,79,233,0.15);
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.3rem;
+      color: var(--white); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--mint); display: inline-block; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--grey); text-decoration: none; font-size: .9rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--indigo); color: var(--white);
+      padding: 10px 22px; border-radius: 8px;
+      text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 6% 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: -200px; right: -200px;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(91,79,233,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 560px; position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(168,240,212,0.1);
+      border: 1px solid rgba(168,240,212,0.25);
+      color: var(--mint); font-size: .8rem; font-weight: 500;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 700; line-height: 1.1; margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--grey); font-size: 1.1rem; line-height: 1.7; margin-bottom: 36px; max-width: 460px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--indigo); color: var(--white);
+      padding: 14px 28px; border-radius: 8px;
+      text-decoration: none; font-weight: 600; font-size: 1rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(91,79,233,.4); }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 14px 28px; border-radius: 8px;
+      text-decoration: none; font-weight: 500; font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.05); }
+
+    /* ANIMATED CODE WINDOW */
+    .hero-visual {
+      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+      width: min(480px, 42vw);
+    }
+    .code-window {
+      background: var(--card-bg);
+      border: 1px solid rgba(91,79,233,0.3);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,.5);
+    }
+    .code-titlebar {
+      background: rgba(255,255,255,.04);
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #FF5F57; }
+    .dot-y { background: #FEBC2E; }
+    .dot-g { background: #28C840; }
+    .code-filename { color: var(--grey); font-size: .75rem; margin-left: 6px; }
+    .code-body { padding: 20px; font-family: 'Courier New', monospace; font-size: .8rem; line-height: 1.8; }
+    .code-line { opacity: 0; transform: translateX(-8px); animation: fadeIn .35s forwards; }
+    .kw   { color: #C792EA; }
+    .sel  { color: var(--mint); }
+    .prop { color: #82AAFF; }
+    .val  { color: #F78C6C; }
+    .str  { color: #C3E88D; }
+    .comment { color: #546E7A; }
+    .code-line:nth-child(1)  { animation-delay: .2s; }
+    .code-line:nth-child(2)  { animation-delay: .5s; }
+    .code-line:nth-child(3)  { animation-delay: .8s; }
+    .code-line:nth-child(4)  { animation-delay: 1.0s; }
+    .code-line:nth-child(5)  { animation-delay: 1.2s; }
+    .code-line:nth-child(6)  { animation-delay: 1.4s; }
+    .code-line:nth-child(7)  { animation-delay: 1.6s; }
+    .code-line:nth-child(8)  { animation-delay: 1.8s; }
+    .code-line:nth-child(9)  { animation-delay: 2.0s; }
+    .code-line:nth-child(10) { animation-delay: 2.2s; }
+    .code-line:nth-child(11) { animation-delay: 2.4s; }
+    .code-line:nth-child(12) { animation-delay: 2.6s; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateX(0); } }
+    .live-preview {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding: 14px 20px; display: flex; gap: 10px;
+    }
+    .preview-box {
+      flex: 1; height: 48px; border-radius: 6px;
+      background: rgba(91,79,233,.35);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .preview-box:nth-child(2) { animation-delay: .3s; background: rgba(168,240,212,.25); }
+    .preview-box:nth-child(3) { animation-delay: .6s; flex: 1.5; background: rgba(91,79,233,.2); }
+    @keyframes pulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      background: rgba(255,255,255,.03);
+      border-top: 1px solid rgba(255,255,255,.07);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .stat {
+      flex: 1; padding: 32px 6%; text-align: center;
+      border-right: 1px solid rgba(255,255,255,.07);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--white); display: block;
+    }
+    .stat-label { color: var(--grey); font-size: .85rem; margin-top: 4px; }
+
+    /* SHARED SECTION STYLES */
+    section { padding: 90px 6%; }
+    .section-eyebrow {
+      font-size: .75rem; font-weight: 600;
+      color: var(--mint); letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub { color: var(--grey); max-width: 520px; line-height: 1.7; margin-bottom: 52px; }
+
+    /* TOPICS */
+    .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .topic-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--indigo), var(--mint));
+      opacity: 0; transition: opacity .2s;
+    }
+    .topic-card:hover { border-color: rgba(91,79,233,.4); transform: translateY(-4px); }
+    .topic-card:hover::before { opacity: 1; }
+    .topic-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(91,79,233,.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 18px;
+    }
+    .topic-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+    .topic-card p { color: var(--grey); font-size: .88rem; line-height: 1.65; }
+    .topic-tag {
+      display: inline-block; margin-top: 16px;
+      font-size: .72rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 100px;
+      background: rgba(168,240,212,.12); color: var(--mint);
+    }
+
+    /* HOW IT WORKS */
+    .how-section { background: rgba(255,255,255,.02); }
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .how-step {
+      padding: 36px 32px;
+      border-right: 1px solid rgba(255,255,255,.07);
+    }
+    .how-step:last-child { border-right: none; }
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 700;
+      color: rgba(91,79,233,.2); line-height: 1; margin-bottom: 16px;
+    }
+    .how-step h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+    .how-step p { color: var(--grey); font-size: .88rem; line-height: 1.65; }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform .2s;
+    }
+    .project-card:hover { transform: translateY(-4px); }
+    .project-thumb { height: 180px; position: relative; overflow: hidden; }
+    .thumb-1 { background: linear-gradient(135deg, #1a0533, #5B4FE9); }
+    .thumb-2 { background: linear-gradient(135deg, #012030, #0EA5E9); }
+    .thumb-3 { background: linear-gradient(135deg, #1a2a00, #4ADE80); }
+    .thumb-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .mini-ui {
+      background: rgba(255,255,255,.1);
+      border-radius: 8px; padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,.15);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .7rem; color: rgba(255,255,255,.8); min-width: 140px;
+    }
+    .mini-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.3); margin: 6px 0; }
+    .mini-bar.short { width: 60%; background: var(--mint); }
+    .project-info { padding: 20px 22px; }
+    .project-info h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .project-info p { color: var(--grey); font-size: .85rem; }
+    .project-skills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .skill-pill {
+      font-size: .72rem; padding: 4px 10px; border-radius: 100px;
+      background: rgba(91,79,233,.15); color: #A5A8FF;
+      border: 1px solid rgba(91,79,233,.25);
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(91,79,233,.08));
+      border-top: 1px solid rgba(91,79,233,.15);
+    }
+    .cta-section .section-sub { margin: 0 auto 40px; text-align: center; }
+    .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 6%;
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.1rem; color: var(--white);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { color: var(--grey); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { color: var(--grey); font-size: .8rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .hero-content { max-width: 100%; }
+      .how-grid { grid-template-columns: 1fr 1fr; }
+      .how-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .how-step:last-child { border-bottom: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .how-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .code-line { animation: none; opacity: 1; transform: none; }
+      .preview-box { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo"><span class="logo-dot"></span>PixelCraft</a>
+    <ul class="nav-links">
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+    <a href="#start" class="nav-cta">Start for free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">✦ Beginner friendly</div>
+      <h1>Build the web,<br/><em>one pixel at a time.</em></h1>
+      <p>PixelCraft teaches you HTML & CSS through hands-on projects. No prior experience needed — just curiosity and a browser.</p>
+      <div class="hero-actions">
+        <a href="#start" class="btn-primary">Start building free →</a>
+        <a href="#projects" class="btn-secondary">See projects</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="code-window">
+        <div class="code-titlebar">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+          <span class="code-filename">landing-page.css</span>
+        </div>
+        <div class="code-body">
+          <div class="code-line"><span class="comment">/* my first landing page */</span></div>
+          <div class="code-line"><span class="sel">.hero</span> {</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">display</span>: <span class="val">flex</span>;</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">align-items</span>: <span class="val">center</span>;</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">background</span>: <span class="str">#0D1B2A</span>;</div>
+          <div class="code-line">}</div>
+          <div class="code-line">&nbsp;</div>
+          <div class="code-line"><span class="sel">.hero h1</span> {</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">font-size</span>: <span class="val">3rem</span>;</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">color</span>: <span class="str">#F5F5F0</span>;</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="prop">padding</span>: <span class="val">0 24px</span>;</div>
+          <div class="code-line">}</div>
+        </div>
+        <div class="live-preview">
+          <div class="preview-box"></div>
+          <div class="preview-box"></div>
+          <div class="preview-box"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Beginner projects</span></div>
+    <div class="stat"><span class="stat-num">0</span><span class="stat-label">Software to install</span></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Browser-based</span></div>
+    <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Forever to start</span></div>
+  </div>
+
+  <!-- TOPICS -->
+  <section id="topics">
+    <div class="section-eyebrow">What you'll learn</div>
+    <h2 class="section-title">Everything a page is made of</h2>
+    <p class="section-sub">Cover the real fundamentals — no skipping ahead, no fluff. Each concept builds directly on the last.</p>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-icon">🏗️</div>
+        <h3>HTML Structure</h3>
+        <p>Understand how browsers read markup. Build headings, paragraphs, lists, links, and semantic sections.</p>
+        <span class="topic-tag">HTML</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🎨</div>
+        <h3>Color & Typography</h3>
+        <p>Pick palettes that hold together. Set font sizes, weights, and spacing that guide the eye naturally.</p>
+        <span class="topic-tag">CSS</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">📐</div>
+        <h3>Box Model & Spacing</h3>
+        <p>Master margin, padding, and borders. Learn why elements collide and exactly how to stop them.</p>
+        <span class="topic-tag">CSS</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">⬜</div>
+        <h3>Flexbox Layout</h3>
+        <p>Align anything — horizontally, vertically, or both. Columns, rows, and gaps become effortless.</p>
+        <span class="topic-tag">CSS</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🔲</div>
+        <h3>CSS Grid</h3>
+        <p>Design entire page layouts on a two-dimensional grid. Place elements exactly where you want them.</p>
+        <span class="topic-tag">CSS</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">📱</div>
+        <h3>Responsive Design</h3>
+        <p>Make pages look great on any screen using media queries and fluid units like rem, %, and vw.</p>
+        <span class="topic-tag">CSS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="how-section">
+    <div class="section-eyebrow">The process</div>
+    <h2 class="section-title">How PixelCraft works</h2>
+    <p class="section-sub">A simple loop that turns complete beginners into confident builders.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <h3>Read the concept</h3>
+        <p>Short, clear explanations without jargon. We cover exactly what you need to build the next thing.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <h3>Try it in the editor</h3>
+        <p>Write real code in your browser. See changes instantly without installing anything.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <h3>Build a mini project</h3>
+        <p>Apply what you just learned to something real — a card, a nav bar, a hero section.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <h3>Ship your landing page</h3>
+        <p>Combine everything into a complete landing page you can share with anyone, for free.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-eyebrow">Beginner projects</div>
+    <h2 class="section-title">What you'll build</h2>
+    <p class="section-sub">Every project is small enough to finish in one sitting and teaches something you'll actually use.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb thumb-1">
+          <div class="thumb-inner">
+            <div class="mini-ui">
+              <div class="mini-bar"></div>
+              <div class="mini-bar short"></div>
+              <div class="mini-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Personal Landing Page</h3>
+          <p>Your first full page — a hero, an about section, and a contact footer.</p>
+          <div class="project-skills">
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+            <span class="skill-pill">Flexbox</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb thumb-2">
+          <div class="thumb-inner">
+            <div class="mini-ui" style="font-size:.65rem;">
+              <div style="display:flex;gap:6px;margin-bottom:6px;">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.3);"></div>
+                <div>
+                  <div class="mini-bar" style="width:60px;height:4px;margin:2px 0;"></div>
+                  <div class="mini-bar short" style="height:3px;margin:0;width:40px;"></div>
+                </div>
+              </div>
+              <div class="mini-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Product Card</h3>
+          <p>A self-contained card with image, title, price, and button. Great for the box model.</p>
+          <div class="project-skills">
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+            <span class="skill-pill">Box Model</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb thumb-3">
+          <div class="thumb-inner">
+            <div class="mini-ui">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+                <div class="mini-bar" style="margin:0;height:20px;border-radius:4px;"></div>
+                <div class="mini-bar short" style="margin:0;height:20px;border-radius:4px;"></div>
+                <div class="mini-bar short" style="margin:0;height:20px;border-radius:4px;"></div>
+                <div class="mini-bar" style="margin:0;height:20px;border-radius:4px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Photo Grid Gallery</h3>
+          <p>A clean image gallery using CSS Grid. Control columns, gaps, and responsive breakpoints.</p>
+          <div class="project-skills">
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS Grid</span>
+            <span class="skill-pill">Responsive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="start" class="cta-section">
+    <div class="section-eyebrow">Ready?</div>
+    <h2 class="section-title">Your first line of code<br/>is one click away.</h2>
+    <p class="section-sub">No account required to start. Open the editor, write some HTML, and watch something appear on screen.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary">Open the editor →</a>
+      <a href="#topics" class="btn-secondary">Browse topics first</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo"><span class="logo-dot"></span>PixelCraft</a>
+    <ul class="footer-links">
+      <li><a href="#">Topics</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <span class="footer-copy">Built with HTML & CSS — just like you will be.</span>
+  </footer>
+
+</body>
+</html>
